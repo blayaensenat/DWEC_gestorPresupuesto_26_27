@@ -20,23 +20,65 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €.`;
 }
 
-function CrearGasto(descripcion, valor) {
-    this.descripcion = descripcion;
-    this.valor = (typeof valor === 'number' && valor >= 0) ? valor : 0;
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+  this.descripcion = descripcion;
+  this.valor = (typeof valor === 'number' && valor >= 0) ? valor : 0;
 
-    this.mostrarGasto = function() {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    };
+  if (fecha && !isNaN(Date.parse(fecha))) {
+    this.fecha = Date.parse(fecha);
+  } else {
+    this.fecha = Date.now();
+  }
 
-    this.actualizarDescripcion = function(nuevaDescripcion) {
-        this.descripcion = nuevaDescripcion;
-    };
+  this.etiquetas = [];
 
-    this.actualizarValor = function(nuevoValor) {
-        if (typeof nuevoValor === 'number' && nuevoValor >= 0) {
-            this.valor = nuevoValor;
-        }
-    };
+  this.mostrarGasto = function() {
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+  };
+
+  this.actualizarDescripcion = function(nuevaDescripcion) {
+    this.descripcion = nuevaDescripcion;
+  };
+
+  this.actualizarValor = function(nuevoValor) {
+    if (typeof nuevoValor === 'number' && nuevoValor >= 0) {
+      this.valor = nuevoValor;
+    }
+  };
+
+  this.actualizarFecha = function(nuevaFecha) {
+    if (nuevaFecha && !isNaN(Date.parse(nuevaFecha))) {
+      this.fecha = Date.parse(nuevaFecha);
+    }
+  };
+
+  this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+    for (const tag of nuevasEtiquetas) {
+      if (typeof tag === 'string' && !this.etiquetas.includes(tag)) {
+        this.etiquetas.push(tag);
+      }
+    }
+  };
+
+  this.borrarEtiquetas = function(...etiquetasABorrar) {
+    this.etiquetas = this.etiquetas.filter(
+      (tag) => !etiquetasABorrar.includes(tag)
+    );
+  };
+
+  this.mostrarGastoCompleto = function() {
+    let salida = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+    salida += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
+    salida += `Etiquetas:`;
+    for (const tag of this.etiquetas) {
+      salida += `\n - ${tag}`;
+    }
+    return salida;
+  };
+
+  if (etiquetas.length > 0) {
+    this.anyadirEtiquetas(...etiquetas);
+  }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
