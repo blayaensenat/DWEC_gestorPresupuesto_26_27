@@ -3,6 +3,7 @@
     "name": "practica_dwec_gestor_presupuesto",
     "version": "1.0.0",
     "scripts": {
+        "postinstall": "node -e \"const fs=require('fs'),p='node_modules/mocha/package.json';if(fs.existsSync(p)){const j=JSON.parse(fs.readFileSync(p));j.type='commonjs';fs.writeFileSync(p,JSON.stringify(j,null,2));}\"",
         "test": "mocha",
         "test1": "mocha test/01_testIntroJSI.cy.js",
         "test2": "mocha test/02_testIntroJSII.cy.js",
