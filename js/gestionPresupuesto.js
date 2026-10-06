@@ -17,7 +17,7 @@ function actualizarPresupuesto(valor) {
 }
 
 function mostrarPresupuesto() {
-    return `Tu presupuesto actual es de ${presupuesto} €.`;
+  return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -66,15 +66,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     );
   };
 
-  this.mostrarGastoCompleto = function() {
-    let salida = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
-    salida += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
-    salida += `Etiquetas:\n`;
-    for (const tag of this.etiquetas) {
-      salida += `- ${tag}\n`;
-    }
-    return salida;
-  };
+this.mostrarGastoCompleto = function() {
+  let salida = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+  salida += `Fecha: ${new Date(this.fecha).toLocaleString('es-ES')}\n`;
+  salida += `Etiquetas:\n`;
+  for (const tag of this.etiquetas) {
+    salida += `- ${tag}\n`;
+  }
+  return salida;
+};
 
   if (etiquetas.length > 0) {
     this.anyadirEtiquetas(...etiquetas);
